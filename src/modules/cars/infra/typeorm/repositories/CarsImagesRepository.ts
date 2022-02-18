@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { DeleteResult, getRepository, Repository } from 'typeorm';
 
 import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
 
@@ -17,6 +17,16 @@ class CarsImagesRepository implements ICarsImagesRepository {
     await this.repository.save(carImage);
 
     return carImage;
+  }
+
+  async findById(id: string): Promise<CarImage> {
+    const image = await this.repository.findOne(id);
+    return image;
+  }
+
+  async deleteImag(id: string): Promise<DeleteResult> {
+    const image = await this.repository.delete(id);
+    return image;
   }
 }
 
