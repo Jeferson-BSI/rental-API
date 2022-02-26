@@ -16,6 +16,7 @@ describe('List Category Controller', () => {
 
     const id = uuid();
     const password = await hash('admin', 8);
+
     await connection.query(`INSERT INTO USERS(id, name, email, password, "isAdmin", created_at, driver_license)
     values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, 'now()', 'xxxx-xxxx')
   `);
@@ -37,8 +38,8 @@ describe('List Category Controller', () => {
     await request(app)
       .post('/categories')
       .send({
-        name: 'Category Supertest',
-        description: 'Category Supertest',
+        name: 'List Category Supertest',
+        description: 'List Category Supertest',
       })
       .set({ Authorization: `Bearer ${token}` });
 
@@ -47,6 +48,6 @@ describe('List Category Controller', () => {
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);
     expect(response.body[0]).toHaveProperty('id');
-    expect(response.body[0].name).toEqual('Category Supertest');
+    expect(response.body[0].name).toEqual('List Category Supertest');
   });
 });
