@@ -3,8 +3,8 @@ import { container } from 'tsyringe';
 
 import { DeleteImageCarUseCase } from './DeleteImageCarUseCase';
 
-class DeleteImageCarCotroller {
-  async hendle(request: Request, response: Response): Promise<Response> {
+class DeleteImageCarController {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const deleteImageCarUseCase = container.resolve(DeleteImageCarUseCase);
@@ -15,4 +15,4 @@ class DeleteImageCarCotroller {
   }
 }
 
-export { DeleteImageCarCotroller };
+export { DeleteImageCarController };
