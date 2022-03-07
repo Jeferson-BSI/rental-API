@@ -5,7 +5,7 @@ import uploadConfig from '@config/upload';
 import { CreateCarController } from '@modules/cars/useCases/createCar/CreateCarController';
 import { CreateCarSpecificationController } from '@modules/cars/useCases/createCarSpecification/CreateCarSpecificationController';
 import { DeleteImageCarController } from '@modules/cars/useCases/deleteImageCar/DeleteImageCarController';
-import { ListAvailableCarsController } from '@modules/cars/useCases/listCars.ts/ListAvailableCarsController';
+import { ListAvailableCarsController } from '@modules/cars/useCases/listCars/ListAvailableCarsController';
 import { UploadImagesCarController } from '@modules/cars/useCases/uploadImageCar/UploadImagesCarController';
 
 import { ensureAdmin } from '../middlewares/ensureAdmin';
