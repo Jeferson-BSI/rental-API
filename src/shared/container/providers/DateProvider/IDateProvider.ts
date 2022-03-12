@@ -4,6 +4,7 @@ interface IDateProvider {
   convertToUtc(date: Date): string;
   dateNow(): Date;
   addDays(days: number): Date;
+  AddHours(hours: number): Date;
 }
 
 export { IDateProvider };
