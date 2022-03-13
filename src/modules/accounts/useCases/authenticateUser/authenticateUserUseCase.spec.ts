@@ -46,7 +46,7 @@ describe('Authenticate user', () => {
     const user: ICreateUserDTO = {
       name: 'test',
       email: 'test@gmail.com',
-      driver_license: '090349045',
+      driver_license: '0904645645',
       password: '1234',
       isAdmin: false,
     };
