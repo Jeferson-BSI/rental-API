@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
+import { IStorageProvider } from '@shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
 import { deleteFIle } from '@utils/file';
 
@@ -8,19 +9,21 @@ import { deleteFIle } from '@utils/file';
 class DeleteImageCarUseCase {
   constructor(
     @inject('CarsImagesRepository')
-    private carsImagesRepository: ICarsImagesRepository
+    private carsImagesRepository: ICarsImagesRepository,
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider
   ) {}
   async execute(id: string): Promise<void> {
-    const imageExists = await this.carsImagesRepository.findById(id);
+    const image = await this.carsImagesRepository.findById(id);
 
-    if (!imageExists) {
+    if (!image) {
       throw new AppError('Image does not exists!', 400);
     }
 
-    const image = await this.carsImagesRepository.deleteImag(id);
+    const deleteImage = await this.carsImagesRepository.deleteImag(id);
 
-    if (image) {
-      deleteFIle(`./tmp/cars/${imageExists.image_name}`);
+    if (deleteImage) {
+      await this.storageProvider.delete(image.image_name, 'cars');
     }
   }
 }

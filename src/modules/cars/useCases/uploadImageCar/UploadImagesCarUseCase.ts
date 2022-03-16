@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
+import { IStorageProvider } from '@shared/container/providers/StorageProvider/IStorageProvider';
 
 import { AppError } from '../../../../shared/errors/AppError';
 
@@ -16,7 +17,9 @@ class UploadImagesCarUseCase {
     @inject('CarsImagesRepository')
     private carsImagesRepository: ICarsImagesRepository,
     @inject('CarsRepository')
-    private carsRepository: ICarsRepository
+    private carsRepository: ICarsRepository,
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider
   ) {}
 
   async execute({ car_id, images_name }: IRequest): Promise<void> {
@@ -26,8 +29,9 @@ class UploadImagesCarUseCase {
       throw new AppError('Car does not exists!', 400);
     }
 
-    images_name.map(async (image_name) => {
-      await this.carsImagesRepository.create(car_id, image_name);
+    images_name.map(async (image) => {
+      await this.carsImagesRepository.create(car_id, image);
+      await this.storageProvider.save(image, 'cars');
     });
   }
 }
