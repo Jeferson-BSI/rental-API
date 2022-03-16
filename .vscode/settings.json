@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["dtos", "middlewares", "Rentx", "tsyringe", "typeorm"]
+  "cSpell.words": [
+    "dtos",
+    "middlewares",
+    "originalname",
+    "Rentx",
+    "tsyringe",
+    "typeorm"
+  ]
 }
