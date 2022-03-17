@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.42% </span>
+                <span class="strong">45.16% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/28</span>
+                <span class='fraction'>14/31</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.42% </span>
+                <span class="strong">45.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/28</span>
+                <span class='fraction'>14/31</span>
             </div>
         
             
@@ -91,7 +91,10 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -100,6 +103,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -122,6 +128,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inject, injectable } from 'tsyringe';
 &nbsp;
 import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
+import { IStorageProvider } from '@shared/container/providers/StorageProvider/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
 import { deleteFIle } from '@utils/file';
 &nbsp;
@@ -129,19 +136,21 @@ import { deleteFIle } from '@utils/file';
 class DeleteImageCarUseCase {
 <span class="fstat-no" title="function not covered" >  constructor(</span>
 <span class="cstat-no" title="statement not covered" >    @inject('CarsImagesRepository')</span>
-<span class="cstat-no" title="statement not covered" >    private carsImagesRepository: ICarsImagesRepository</span>
+<span class="cstat-no" title="statement not covered" >    private carsImagesRepository: ICarsImagesRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject('StorageProvider')</span>
+<span class="cstat-no" title="statement not covered" >    private storageProvider: IStorageProvider</span>
 <span class="cstat-no" title="statement not covered" >  ) {}</span>
 <span class="fstat-no" title="function not covered" >  async execute(id: string): Promise&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const imageExists = await this.carsImagesRepository.findById(id);</span>
+<span class="cstat-no" title="statement not covered" >    const image = await this.carsImagesRepository.findById(id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (!imageExists) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!image) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new AppError('Image does not exists!', 400);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const image = await this.carsImagesRepository.deleteImag(id);</span>
+<span class="cstat-no" title="statement not covered" >    const deleteImage = await this.carsImagesRepository.deleteImag(id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (image) {</span>
-<span class="cstat-no" title="statement not covered" >      deleteFIle(`./tmp/cars/${imageExists.image_name}`);</span>
+<span class="cstat-no" title="statement not covered" >    if (deleteImage) {</span>
+<span class="cstat-no" title="statement not covered" >      await this.storageProvider.delete(image.image_name, 'cars');</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
@@ -154,7 +163,7 @@ export { DeleteImageCarUseCase };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Mar 16 2022 18:55:02 GMT-0300 (Brasilia Standard Time)
+                at Wed Mar 16 2022 23:02:17 GMT-0300 (Brasilia Standard Time)
             </div>
         <script src="../../../prettify.js"></script>
         <script>
